@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0.0" package="WOL.Droid.WOL.Droid" android:installLocation="preferExternal">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0.0" package="com.happyzhang.WOL" android:installLocation="preferExternal">
 	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="27" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<application android:allowBackup="true" android:icon="@drawable/logo" android:label="@string/app_name" android:roundIcon="@drawable/logo" android:supportsRtl="true" android:theme="@style/AppTheme"></application>
