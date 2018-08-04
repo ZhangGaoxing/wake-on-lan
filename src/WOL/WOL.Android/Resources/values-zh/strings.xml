@@ -11,6 +11,8 @@
   <string name="License">本应用使用 MIT 许可开源：</string>
   <string name="UWP">获取 Windows 10 通用应用：</string>
 
+  <string name="main_tip">单击此处进行自动搜索或点击右下角按钮手动添加。列表项长按发送唤醒命令，短按进行编辑。</string>
+
   <string name="add_device_name">设备名称：</string>
   <string name="add_device_ip">IP 地址：</string>
   <string name="add_device_mac">MAC 地址：</string>

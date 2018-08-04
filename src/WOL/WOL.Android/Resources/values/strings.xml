@@ -11,6 +11,8 @@
   <string name="License">This application is licensed under the MIT License：</string>
   <string name="UWP">Get Windows 10 Application：</string>
 
+  <string name="main_tip">Click here to automatically scan or click on the lower right button to manually add. The list item long pressed for sending wake-up command and short pressed for editing.</string>
+  
   <string name="add_device_name">Device Name : </string>
   <string name="add_device_ip">IP Address : </string>
   <string name="add_device_mac">MAC Address : </string>

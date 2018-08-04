@@ -22,7 +22,16 @@
         <ListView
             android:id="@+id/DeviceList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/Tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="45dp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:text="@string/main_tip" />
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

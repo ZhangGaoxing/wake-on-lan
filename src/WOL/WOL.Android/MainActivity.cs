@@ -30,6 +30,8 @@ namespace WOL.Droid
         DeviceListAdapter adapter;
         ListView DeviceList;
 
+        TextView Tips;
+
         CancellationTokenSource scanCTS = new CancellationTokenSource();
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -44,6 +46,13 @@ namespace WOL.Droid
 			FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
 
+            Tips = FindViewById<TextView>(Resource.Id.Tips);
+            Tips.Click += (s, e) =>
+            {
+                ShowScanDialog();
+            };
+            DeviceList = FindViewById<ListView>(Resource.Id.DeviceList);
+
             try
             {
                 data = sqlite.QueryAll();
@@ -54,7 +63,12 @@ namespace WOL.Droid
                 data = sqlite.QueryAll();
             }
 
-            DeviceList = FindViewById<ListView>(Resource.Id.DeviceList);
+            if (data.Count != 0)
+            {
+                DeviceList.Visibility = ViewStates.Visible;
+                Tips.Visibility = ViewStates.Gone;
+            }
+
             adapter = new DeviceListAdapter(this, Resource.Layout.device_list_item, data);
             DeviceList.Adapter = adapter;
             DeviceList.ItemLongClick += (s, e) =>
@@ -193,6 +207,12 @@ namespace WOL.Droid
                         adapter = new DeviceListAdapter(this, Resource.Layout.device_list_item, data);
                         DeviceList.Adapter = adapter;
 
+                        if (data.Count != 0)
+                        {
+                            DeviceList.Visibility = ViewStates.Visible;
+                            Tips.Visibility = ViewStates.Gone;
+                        }
+
                         Toast.MakeText(this, GetString(Resource.String.add_device_delete_success), ToastLength.Long).Show();
                     })
                     .Create();
@@ -287,6 +307,12 @@ namespace WOL.Droid
                 data = sqlite.QueryAll();
                 adapter = new DeviceListAdapter(this, Resource.Layout.device_list_item, data);
                 DeviceList.Adapter = adapter;
+
+                if (data.Count != 0)
+                {
+                    DeviceList.Visibility = ViewStates.Visible;
+                    Tips.Visibility = ViewStates.Gone;
+                }
 
                 show.Dismiss();
             }, token, TaskContinuationOptions.AttachedToParent, csc);
@@ -396,6 +422,12 @@ namespace WOL.Droid
                     data = sqlite.QueryAll();
                     adapter = new DeviceListAdapter(this, Resource.Layout.device_list_item, data);
                     DeviceList.Adapter = adapter;
+
+                    if (data.Count != 0)
+                    {
+                        DeviceList.Visibility = ViewStates.Visible;
+                        Tips.Visibility = ViewStates.Gone;
+                    }
 
                     Toast.MakeText(this, GetString(Resource.String.add_device_save_success), ToastLength.Long).Show();
                 })

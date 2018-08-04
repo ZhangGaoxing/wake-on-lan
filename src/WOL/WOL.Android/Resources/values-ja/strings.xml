@@ -11,6 +11,8 @@
   <string name="License">本アプリケーション使用 MIT 許可オープンソース：</string>
   <string name="UWP">Windows 10 のアプリケーションを取得：</string>
 
+  <string name="main_tip">ここをクリックして自動検索または右下角ボタンをクリックして手動で追加します。リスト項目長は、送信コマンドを送信し、短押しで編集する。</string>
+  
   <string name="add_device_name">装置名：</string>
   <string name="add_device_ip">IP アドレス：</string>
   <string name="add_device_mac">MAC アドレス：</string>
