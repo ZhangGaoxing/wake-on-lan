@@ -7,6 +7,8 @@
   <string name="Feedback">发送反馈</string>
   <string name="EMail">发送邮件至：</string>
   <string name="Sina">新浪微博私信：</string>
+  <string name="Others">其他</string>
+  <string name="License">本应用使用 MIT 许可开源：</string>
   <string name="UWP">获取 Windows 10 通用应用：</string>
 
   <string name="add_device_name">设备名称：</string>

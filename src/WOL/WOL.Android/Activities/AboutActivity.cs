@@ -16,17 +16,15 @@ namespace WOL.Droid.Activities
     [Activity(Label = "AboutActivity")]
     public class AboutActivity : Activity
     {
-        TextView version;
-        ImageView weibo;
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.About);
 
-            version = FindViewById<TextView>(Resource.Id.version);
-            weibo = FindViewById<ImageView>(Resource.Id.weibo);
+            TextView version = FindViewById<TextView>(Resource.Id.version);
+            ImageView weibo = FindViewById<ImageView>(Resource.Id.weibo);
+            ImageView github = FindViewById<ImageView>(Resource.Id.github);
 
             PackageInfo info = PackageManager.GetPackageInfo(PackageName, PackageInfoFlags.Activities);
             version.Text = info.VersionName;
@@ -37,6 +35,15 @@ namespace WOL.Droid.Activities
                 intent.SetAction(Intent.ActionView);
                 intent.AddCategory(Intent.CategoryBrowsable);
                 intent.SetData(Android.Net.Uri.Parse("http://www.weibo.com/279639933"));
+                StartActivity(intent);
+            };
+
+            github.Click += (_s, _e) =>
+            {
+                Intent intent = new Intent();
+                intent.SetAction(Intent.ActionView);
+                intent.AddCategory(Intent.CategoryBrowsable);
+                intent.SetData(Android.Net.Uri.Parse("https://github.com/ZhangGaoxing/wake-on-lan"));
                 StartActivity(intent);
             };
         }

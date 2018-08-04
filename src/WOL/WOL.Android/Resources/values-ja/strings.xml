@@ -7,6 +7,8 @@
   <string name="Feedback">フィードバック</string>
   <string name="EMail">メールを送る：</string>
   <string name="Sina">新浪微博私信：</string>
+  <string name="Others">其他</string>
+  <string name="License">本アプリケーション使用 MIT 許可オープンソース：</string>
   <string name="UWP">Windows 10 のアプリケーションを取得：</string>
 
   <string name="add_device_name">装置名：</string>

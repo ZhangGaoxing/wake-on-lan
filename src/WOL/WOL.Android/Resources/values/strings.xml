@@ -7,6 +7,8 @@
   <string name="Feedback">Feedback</string>
   <string name="EMail">Mail to：</string>
   <string name="Sina">Send Weibo Message：</string>
+  <string name="Others">Others</string>
+  <string name="License">This application is licensed under the MIT License：</string>
   <string name="UWP">Get Windows 10 Application：</string>
 
   <string name="add_device_name">Device Name : </string>

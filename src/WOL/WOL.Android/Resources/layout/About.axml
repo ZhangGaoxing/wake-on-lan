@@ -92,6 +92,31 @@
                 android:src="@drawable/weibo"
                 android:layout_gravity="center" />
         </LinearLayout>
+        <TextView
+            android:text="@string/Others"
+            android:textSize="22sp"
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:text="@string/License"
+                android:textColor="#696969"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+            <ImageView
+                android:id="@+id/github"
+                android:layout_height="35dp"
+                android:layout_width="35dp"
+                android:src="@drawable/github"
+                android:layout_gravity="center" />
+        </LinearLayout>
     <!--<LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
