@@ -1,0 +1,29 @@
+<resources>
+  <string name="app_name">Wake on LAN</string>
+  <string name="action_settings">設定</string>
+  <string name="Scan">自動スキャン</string>
+  <string name="About">について</string>
+  <string name="Author">张高兴</string>
+  <string name="Feedback">フィードバック</string>
+  <string name="EMail">メールを送る：</string>
+  <string name="Sina">新浪微博私信：</string>
+  <string name="UWP">Windows 10 のアプリケーションを取得：</string>
+
+  <string name="add_device_name">装置名：</string>
+  <string name="add_device_ip">IP アドレス：</string>
+  <string name="add_device_mac">MAC アドレス：</string>
+  <string name="add_device_broadcast">Broadcast アドレス：</string>
+  <string name="add_device_port">ポート：</string>
+  <string name="add_device_mul">複数の送信：</string>
+  <string name="add_device_desc">説明：</string>
+  <string name="add_device_save">セーブ</string>
+  <string name="add_device_cancel">キャンセル</string>
+  <string name="add_device_delete">デリート</string>
+  <string name="add_device_error">データ形式エラー、保存に失敗しました。</string>
+  <string name="add_device_save_success">成功を救う。</string>
+  <string name="add_device_delete_success">成功を削除します。</string>
+
+  <string name="wake_success">コマンドを送信しました。</string>
+
+  <string name="scaning">スキャン中</string>
+</resources>

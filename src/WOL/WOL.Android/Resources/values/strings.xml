@@ -1,0 +1,29 @@
+<resources>
+  <string name="app_name">Wake on LAN</string>
+  <string name="action_settings">Settings</string>
+  <string name="Scan">Automatic Scan</string>
+  <string name="About">About</string>
+  <string name="Author">Zhang Gaoxing</string>
+  <string name="Feedback">Feedback</string>
+  <string name="EMail">Mail to：</string>
+  <string name="Sina">Send Weibo Message：</string>
+  <string name="UWP">Get Windows 10 Application：</string>
+
+  <string name="add_device_name">Device Name : </string>
+  <string name="add_device_ip">IP Address : </string>
+  <string name="add_device_mac">MAC Address : </string>
+  <string name="add_device_broadcast">Broadcast Address : </string>
+  <string name="add_device_port">Port : </string>
+  <string name="add_device_mul">Multiple Sending : </string>
+  <string name="add_device_desc">Description : </string>
+  <string name="add_device_save">SAVE</string>
+  <string name="add_device_cancel">CANCEL</string>
+  <string name="add_device_delete">DELETE</string>
+  <string name="add_device_error">The data format error, save failed.</string>
+  <string name="add_device_save_success">Save success.</string>
+  <string name="add_device_delete_success">Delete success.</string>
+  
+  <string name="wake_success">Command has been sent.</string>
+
+  <string name="scaning">Scaning</string>
+</resources>

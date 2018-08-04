@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/Scan"
+        android:orderInCategory="1"
+        android:title="@string/Scan"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/About"
+        android:orderInCategory="2"
+        android:title="@string/About"
+        app:showAsAction="never" />
+</menu>
