@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\AboutActivity.cs" />
-    <Compile Include="Activities\AddActivity.cs" />
+    <Compile Include="Activities\WakeActivity.cs" />
     <Compile Include="Adapters\DeviceListAdapter.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

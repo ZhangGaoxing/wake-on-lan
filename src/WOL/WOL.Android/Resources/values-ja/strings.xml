@@ -20,6 +20,7 @@
   <string name="add_device_port">ポート：</string>
   <string name="add_device_mul">複数の送信：</string>
   <string name="add_device_desc">説明：</string>
+  <string name="add_device_shortcut">ポップアップのショートカット</string>
   <string name="add_device_save">セーブ</string>
   <string name="add_device_cancel">キャンセル</string>
   <string name="add_device_delete">デリート</string>

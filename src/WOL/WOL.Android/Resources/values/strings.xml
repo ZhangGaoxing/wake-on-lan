@@ -20,6 +20,7 @@
   <string name="add_device_port">Port : </string>
   <string name="add_device_mul">Multiple Sending : </string>
   <string name="add_device_desc">Description : </string>
+  <string name="add_device_shortcut">Pop Shortcut</string>
   <string name="add_device_save">SAVE</string>
   <string name="add_device_cancel">CANCEL</string>
   <string name="add_device_delete">DELETE</string>

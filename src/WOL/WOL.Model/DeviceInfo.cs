@@ -25,5 +25,9 @@ namespace WOL.Model
         public string NcInfo { get; set; }
 
         public int Type { get; set; }
+
+        public bool IsShortcut { get; set; }
+
+        public int OrderNum { get; set; }
     }
 }

@@ -20,6 +20,7 @@
   <string name="add_device_port">广播端口：</string>
   <string name="add_device_mul">多重发送：</string>
   <string name="add_device_desc">描述：</string>
+  <string name="add_device_shortcut">弹出式快捷方式</string>
   <string name="add_device_save">保存</string>
   <string name="add_device_cancel">取消</string>
   <string name="add_device_delete">删除</string>

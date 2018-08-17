@@ -18,6 +18,9 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
 using System.Net.Sockets;
+using Android.Content.PM;
+using Android.Graphics.Drawables;
+using System.Linq;
 
 namespace WOL.Droid
 {
@@ -58,6 +61,8 @@ namespace WOL.Droid
         EditText SendingCount;
 
         EditText DeviceDesc;
+
+        CheckBox Shortcut;
         #endregion
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -273,6 +278,8 @@ namespace WOL.Droid
             SendingCount.Text = device.SendingCount.ToString();
 
             DeviceDesc.Text = device.Description;
+
+            Shortcut.Checked = device.IsShortcut;
         }
 
         private void InitViewControls(View view)
@@ -300,6 +307,8 @@ namespace WOL.Droid
             SendingCount = view.FindViewById<EditText>(Resource.Id.SendingCount);
 
             DeviceDesc = view.FindViewById<EditText>(Resource.Id.DeviceDesc);
+
+            Shortcut = view.FindViewById<CheckBox>(Resource.Id.Shortcut);
         }
 
         private void Wake(AdapterView.ItemLongClickEventArgs e)
@@ -374,6 +383,7 @@ namespace WOL.Droid
                         Port = Convert.ToByte(DevicePort.Text),
                         SendingCount = Convert.ToByte(SendingCount.Text),
                         Description = DeviceDesc.Text,
+                        IsShortcut = Shortcut.Checked
                     };
 
                     sqlite.Insert(device);
@@ -387,6 +397,8 @@ namespace WOL.Droid
                         DeviceList.Visibility = ViewStates.Visible;
                         Tips.Visibility = ViewStates.Gone;
                     }
+
+                    SetShortcut();
 
                     Toast.MakeText(this, GetString(Resource.String.add_device_save_success), ToastLength.Long).Show();
                 })
@@ -425,12 +437,15 @@ namespace WOL.Droid
                     device.Port = Convert.ToByte(DevicePort.Text);
                     device.SendingCount = Convert.ToByte(SendingCount.Text);
                     device.Description = DeviceDesc.Text;
+                    device.IsShortcut = Shortcut.Checked;
 
                     sqlite.Update(device);
 
                     data = sqlite.QueryAll();
                     adapter = new DeviceListAdapter(this, Resource.Layout.device_list_item, data);
                     DeviceList.Adapter = adapter;
+
+                    SetShortcut();
 
                     Toast.MakeText(this, GetString(Resource.String.add_device_save_success), ToastLength.Long).Show();
                 })
@@ -456,6 +471,37 @@ namespace WOL.Droid
                 })
                 .Create();
             AlertDialog show = alertDialog.Show();
+        }
+
+        private void SetShortcut()
+        {
+            List<ShortcutInfo> shortcutInfoList = new List<ShortcutInfo>();
+
+            var shortcuts = data.Where(x => x.IsShortcut == true)
+                .OrderBy(x => x.ID).ToList();
+            int count = (shortcuts.Count > 4) ? 4 : shortcuts.Count;
+            for (int i = 0; i < count; i++)
+            {
+                Intent intent = new Intent();
+                intent.SetClass(this, typeof(WakeActivity));
+                intent.SetAction(Intent.ActionMain);
+                intent.PutExtra("BroadcastAddress", shortcuts[i].BroadcastAddress);
+                intent.PutExtra("MacAddress", shortcuts[i].MacAddress);
+                intent.PutExtra("Port", shortcuts[i].Port);
+                intent.PutExtra("SendingCount", shortcuts[i].SendingCount);
+                ShortcutInfo info = new ShortcutInfo.Builder(this, $"intent{i}")
+                    .SetRank(i)
+                    .SetIcon(Icon.CreateWithResource(this, Resource.Drawable.device))
+                    .SetShortLabel(shortcuts[i].Name)
+                    .SetLongLabel(shortcuts[i].Name)
+                    .SetIntent(intent)
+                    .Build();
+                shortcutInfoList.Add(info);
+            }
+            
+            ShortcutManager shortcutManager = (ShortcutManager)GetSystemService(Context.ShortcutService);
+            shortcutManager.RemoveAllDynamicShortcuts();
+            shortcutManager.SetDynamicShortcuts(shortcutInfoList);
         }
     }
 }

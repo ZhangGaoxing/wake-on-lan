@@ -228,4 +228,16 @@
             android:layout_width="0dp"
             android:layout_weight="1" />
     </LinearLayout>
+	<LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_device_shortcut"
+            android:id="@+id/Shortcut"
+            android:checked="false" />
+    </LinearLayout>
 </LinearLayout>
