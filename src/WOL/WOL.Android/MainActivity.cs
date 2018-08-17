@@ -34,11 +34,38 @@ namespace WOL.Droid
 
         CancellationTokenSource scanCTS = new CancellationTokenSource();
 
+        #region Add View
+        EditText DeviceName;
+
+        EditText DeviceMac1;
+        EditText DeviceMac2;
+        EditText DeviceMac3;
+        EditText DeviceMac4;
+        EditText DeviceMac5;
+        EditText DeviceMac6;
+
+        EditText DeviceIp1;
+        EditText DeviceIp2;
+        EditText DeviceIp3;
+        EditText DeviceIp4;
+
+        EditText DeviceBroadcast1;
+        EditText DeviceBroadcast2;
+        EditText DeviceBroadcast3;
+        EditText DeviceBroadcast4;
+
+        EditText DevicePort;
+        EditText SendingCount;
+
+        EditText DeviceDesc;
+        #endregion
+
         protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
+            Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-			SetContentView(Resource.Layout.activity_main);
+            SetContentView(Resource.Layout.activity_main);
 
             Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
@@ -51,6 +78,7 @@ namespace WOL.Droid
             {
                 ShowScanDialog();
             };
+
             DeviceList = FindViewById<ListView>(Resource.Id.DeviceList);
 
             try
@@ -73,154 +101,15 @@ namespace WOL.Droid
             DeviceList.Adapter = adapter;
             DeviceList.ItemLongClick += (s, e) =>
             {
-                DeviceInfo device = data[e.Position];
-
-                byte[] mac = new byte[6];
-                string[] macStr = device.MacAddress.Split('-');
-                for (int i = 0; i < 6; i++)
-                {
-                    mac[i] = Convert.ToByte(macStr[i], 16);
-                }
-
-                for (int i = 0; i < device.SendingCount; i++)
-                {
-                    WolManager.Wake(device.BroadcastAddress, device.Port, mac);
-                }
-                Toast.MakeText(this, GetString(Resource.String.wake_success), ToastLength.Long).Show();
+                Wake(e);
             };
             DeviceList.ItemClick += (s, e) =>
             {
-                DeviceInfo device = data[e.Position];
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                View view = View.Inflate(this, Resource.Layout.Add, null);
-
-                EditText DeviceName = view.FindViewById<EditText>(Resource.Id.DeviceName);
-
-                EditText DeviceMac1 = view.FindViewById<EditText>(Resource.Id.DeviceMac1);
-                EditText DeviceMac2 = view.FindViewById<EditText>(Resource.Id.DeviceMac2);
-                EditText DeviceMac3 = view.FindViewById<EditText>(Resource.Id.DeviceMac3);
-                EditText DeviceMac4 = view.FindViewById<EditText>(Resource.Id.DeviceMac4);
-                EditText DeviceMac5 = view.FindViewById<EditText>(Resource.Id.DeviceMac5);
-                EditText DeviceMac6 = view.FindViewById<EditText>(Resource.Id.DeviceMac6);
-
-                EditText DeviceIp1 = view.FindViewById<EditText>(Resource.Id.DeviceIp1);
-                EditText DeviceIp2 = view.FindViewById<EditText>(Resource.Id.DeviceIp2);
-                EditText DeviceIp3 = view.FindViewById<EditText>(Resource.Id.DeviceIp3);
-                EditText DeviceIp4 = view.FindViewById<EditText>(Resource.Id.DeviceIp4);
-
-                EditText DeviceBroadcast1 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast1);
-                EditText DeviceBroadcast2 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast2);
-                EditText DeviceBroadcast3 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast3);
-                EditText DeviceBroadcast4 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast4);
-
-                EditText DevicePort = view.FindViewById<EditText>(Resource.Id.DevicePort);
-                EditText SendingCount = view.FindViewById<EditText>(Resource.Id.SendingCount);
-
-                EditText DeviceDesc = view.FindViewById<EditText>(Resource.Id.DeviceDesc);
-
-                string[] mac = device.MacAddress.Split('-');
-                string[] ip = device.IpAddress.Split('.');
-                string[] broadcast = device.BroadcastAddress.Split('.');
-
-                DeviceName.Text = device.Name;
-
-                DeviceMac1.Text = mac[0];
-                DeviceMac2.Text = mac[1];
-                DeviceMac3.Text = mac[2];
-                DeviceMac4.Text = mac[3];
-                DeviceMac5.Text = mac[4];
-                DeviceMac6.Text = mac[5];
-
-                DeviceIp1.Text = ip[0];
-                DeviceIp2.Text = ip[1];
-                DeviceIp3.Text = ip[2];
-                DeviceIp4.Text = ip[3];
-
-                DeviceBroadcast1.Text = broadcast[0];
-                DeviceBroadcast2.Text = broadcast[1];
-                DeviceBroadcast3.Text = broadcast[2];
-                DeviceBroadcast4.Text = broadcast[3];
-
-                DevicePort.Text = device.Port.ToString();
-                SendingCount.Text = device.SendingCount.ToString();
-
-                DeviceDesc.Text = device.Description;
-
-                alertDialog.SetView(view)
-                    .SetPositiveButton(GetString(Resource.String.add_device_save), (_s, _e) =>
-                    {
-                        try
-                        {
-                            Convert.ToByte(DeviceMac1.Text, 16);
-                            Convert.ToByte(DeviceMac2.Text, 16);
-                            Convert.ToByte(DeviceMac3.Text, 16);
-                            Convert.ToByte(DeviceMac4.Text, 16);
-                            Convert.ToByte(DeviceMac5.Text, 16);
-                            Convert.ToByte(DeviceMac6.Text, 16);
-
-                            Convert.ToByte(DeviceIp1.Text);
-                            Convert.ToByte(DeviceIp2.Text);
-                            Convert.ToByte(DeviceIp3.Text);
-                            Convert.ToByte(DeviceIp4.Text);
-
-                            Convert.ToByte(DeviceBroadcast1.Text);
-                            Convert.ToByte(DeviceBroadcast2.Text);
-                            Convert.ToByte(DeviceBroadcast3.Text);
-                            Convert.ToByte(DeviceBroadcast4.Text);
-
-                            Convert.ToByte(DevicePort.Text);
-                            Convert.ToByte(SendingCount.Text);
-                        }
-                        catch
-                        {
-                            Toast.MakeText(this, GetString(Resource.String.add_device_error), ToastLength.Long).Show();
-
-                            return;
-                        }
-
-                        device.Name = DeviceName.Text;
-                        device.MacAddress = $"{DeviceMac1.Text}-{DeviceMac2.Text}-{DeviceMac3.Text}-{DeviceMac4.Text}-{DeviceMac5.Text}-{DeviceMac6.Text}";
-                        device.IpAddress = $"{DeviceIp1.Text}.{DeviceIp2.Text}.{DeviceIp3.Text}.{DeviceIp4.Text}";
-                        device.BroadcastAddress = $"{DeviceBroadcast1.Text}.{DeviceBroadcast2.Text}.{DeviceBroadcast3.Text}.{DeviceBroadcast4.Text}";
-                        device.Port = Convert.ToByte(DevicePort.Text);
-                        device.SendingCount = Convert.ToByte(SendingCount.Text);
-                        device.Description = DeviceDesc.Text;
-
-                        sqlite.Update(device);
-
-                        data = sqlite.QueryAll();
-                        adapter = new DeviceListAdapter(this, Resource.Layout.device_list_item, data);
-                        DeviceList.Adapter = adapter;
-
-                        Toast.MakeText(this, GetString(Resource.String.add_device_save_success), ToastLength.Long).Show();
-                    })
-                    .SetNegativeButton(GetString(Resource.String.add_device_cancel), (_s, _e) =>
-                    {
-                        (_s as AlertDialog).Dismiss();
-                    })
-                    .SetNeutralButton(Resource.String.add_device_delete, (_s, _e) =>
-                    {
-                        sqlite.Delete(device);
-
-                        data = sqlite.QueryAll();
-                        adapter = new DeviceListAdapter(this, Resource.Layout.device_list_item, data);
-                        DeviceList.Adapter = adapter;
-
-                        if (data.Count != 0)
-                        {
-                            DeviceList.Visibility = ViewStates.Visible;
-                            Tips.Visibility = ViewStates.Gone;
-                        }
-
-                        Toast.MakeText(this, GetString(Resource.String.add_device_delete_success), ToastLength.Long).Show();
-                    })
-                    .Create();
-                AlertDialog show = alertDialog.Show();
+                Edit(e);
             };
 		}
 
-		public override bool OnCreateOptionsMenu(IMenu menu)
+        public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.menu_main, menu);
             return true;
@@ -242,6 +131,11 @@ namespace WOL.Droid
             }
 
             return base.OnOptionsItemSelected(item);
+        }
+
+        private void FabOnClick(object sender, EventArgs eventArgs)
+        {
+            Add();
         }
 
         private async void ShowScanDialog()
@@ -272,12 +166,12 @@ namespace WOL.Droid
             }, token);
 
             await t1;
-            
+
             TaskScheduler csc = TaskScheduler.FromCurrentSynchronizationContext();
             await t1.ContinueWith((t) =>
             {
                 var raw = NetworkManager.GetClientMac();
-                
+
                 foreach (var item in raw)
                 {
                     DeviceInfo device = new DeviceInfo
@@ -318,32 +212,119 @@ namespace WOL.Droid
             }, token, TaskContinuationOptions.AttachedToParent, csc);
         }
 
-        private void FabOnClick(object sender, EventArgs eventArgs)
+        private bool TestDataFormat()
+        {
+            try
+            {
+                Convert.ToByte(DeviceMac1.Text, 16);
+                Convert.ToByte(DeviceMac2.Text, 16);
+                Convert.ToByte(DeviceMac3.Text, 16);
+                Convert.ToByte(DeviceMac4.Text, 16);
+                Convert.ToByte(DeviceMac5.Text, 16);
+                Convert.ToByte(DeviceMac6.Text, 16);
+
+                Convert.ToByte(DeviceIp1.Text);
+                Convert.ToByte(DeviceIp2.Text);
+                Convert.ToByte(DeviceIp3.Text);
+                Convert.ToByte(DeviceIp4.Text);
+
+                Convert.ToByte(DeviceBroadcast1.Text);
+                Convert.ToByte(DeviceBroadcast2.Text);
+                Convert.ToByte(DeviceBroadcast3.Text);
+                Convert.ToByte(DeviceBroadcast4.Text);
+
+                Convert.ToByte(DevicePort.Text);
+                Convert.ToByte(SendingCount.Text);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private void InitViewControlsContents(DeviceInfo device)
+        {
+            string[] mac = device.MacAddress.Split('-');
+            string[] ip = device.IpAddress.Split('.');
+            string[] broadcast = device.BroadcastAddress.Split('.');
+
+            DeviceName.Text = device.Name;
+
+            DeviceMac1.Text = mac[0];
+            DeviceMac2.Text = mac[1];
+            DeviceMac3.Text = mac[2];
+            DeviceMac4.Text = mac[3];
+            DeviceMac5.Text = mac[4];
+            DeviceMac6.Text = mac[5];
+
+            DeviceIp1.Text = ip[0];
+            DeviceIp2.Text = ip[1];
+            DeviceIp3.Text = ip[2];
+            DeviceIp4.Text = ip[3];
+
+            DeviceBroadcast1.Text = broadcast[0];
+            DeviceBroadcast2.Text = broadcast[1];
+            DeviceBroadcast3.Text = broadcast[2];
+            DeviceBroadcast4.Text = broadcast[3];
+
+            DevicePort.Text = device.Port.ToString();
+            SendingCount.Text = device.SendingCount.ToString();
+
+            DeviceDesc.Text = device.Description;
+        }
+
+        private void InitViewControls(View view)
+        {
+            DeviceName = view.FindViewById<EditText>(Resource.Id.DeviceName);
+
+            DeviceMac1 = view.FindViewById<EditText>(Resource.Id.DeviceMac1);
+            DeviceMac2 = view.FindViewById<EditText>(Resource.Id.DeviceMac2);
+            DeviceMac3 = view.FindViewById<EditText>(Resource.Id.DeviceMac3);
+            DeviceMac4 = view.FindViewById<EditText>(Resource.Id.DeviceMac4);
+            DeviceMac5 = view.FindViewById<EditText>(Resource.Id.DeviceMac5);
+            DeviceMac6 = view.FindViewById<EditText>(Resource.Id.DeviceMac6);
+
+            DeviceIp1 = view.FindViewById<EditText>(Resource.Id.DeviceIp1);
+            DeviceIp2 = view.FindViewById<EditText>(Resource.Id.DeviceIp2);
+            DeviceIp3 = view.FindViewById<EditText>(Resource.Id.DeviceIp3);
+            DeviceIp4 = view.FindViewById<EditText>(Resource.Id.DeviceIp4);
+
+            DeviceBroadcast1 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast1);
+            DeviceBroadcast2 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast2);
+            DeviceBroadcast3 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast3);
+            DeviceBroadcast4 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast4);
+
+            DevicePort = view.FindViewById<EditText>(Resource.Id.DevicePort);
+            SendingCount = view.FindViewById<EditText>(Resource.Id.SendingCount);
+
+            DeviceDesc = view.FindViewById<EditText>(Resource.Id.DeviceDesc);
+        }
+
+        private void Wake(AdapterView.ItemLongClickEventArgs e)
+        {
+            DeviceInfo device = data[e.Position];
+
+            byte[] mac = new byte[6];
+            string[] macStr = device.MacAddress.Split('-');
+            for (int i = 0; i < 6; i++)
+            {
+                mac[i] = Convert.ToByte(macStr[i], 16);
+            }
+
+            for (int i = 0; i < device.SendingCount; i++)
+            {
+                WolManager.Wake(device.BroadcastAddress, device.Port, mac);
+            }
+            Toast.MakeText(this, GetString(Resource.String.wake_success), ToastLength.Long).Show();
+        }
+
+        private void Add()
         {
             View view = View.Inflate(this, Resource.Layout.Add, null);
-            EditText DeviceName = view.FindViewById<EditText>(Resource.Id.DeviceName);
 
-            EditText DeviceMac1 = view.FindViewById<EditText>(Resource.Id.DeviceMac1);
-            EditText DeviceMac2 = view.FindViewById<EditText>(Resource.Id.DeviceMac2);
-            EditText DeviceMac3 = view.FindViewById<EditText>(Resource.Id.DeviceMac3);
-            EditText DeviceMac4 = view.FindViewById<EditText>(Resource.Id.DeviceMac4);
-            EditText DeviceMac5 = view.FindViewById<EditText>(Resource.Id.DeviceMac5);
-            EditText DeviceMac6 = view.FindViewById<EditText>(Resource.Id.DeviceMac6);
-
-            EditText DeviceIp1 = view.FindViewById<EditText>(Resource.Id.DeviceIp1);
-            EditText DeviceIp2 = view.FindViewById<EditText>(Resource.Id.DeviceIp2);
-            EditText DeviceIp3 = view.FindViewById<EditText>(Resource.Id.DeviceIp3);
-            EditText DeviceIp4 = view.FindViewById<EditText>(Resource.Id.DeviceIp4);
-
-            EditText DeviceBroadcast1 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast1);
-            EditText DeviceBroadcast2 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast2);
-            EditText DeviceBroadcast3 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast3);
-            EditText DeviceBroadcast4 = view.FindViewById<EditText>(Resource.Id.DeviceBroadcast4);
-
-            EditText DevicePort = view.FindViewById<EditText>(Resource.Id.DevicePort);
-            EditText SendingCount = view.FindViewById<EditText>(Resource.Id.SendingCount);
-
-            EditText DeviceDesc = view.FindViewById<EditText>(Resource.Id.DeviceDesc);
+            InitViewControls(view);
 
             view.ViewAttachedToWindow += (s, e) =>
             {
@@ -367,7 +348,7 @@ namespace WOL.Droid
                         }
                         catch
                         {
-                            
+
                         }
                     }
                 };
@@ -377,29 +358,7 @@ namespace WOL.Droid
             alertDialog.SetView(view)
                 .SetPositiveButton(GetString(Resource.String.add_device_save), (s, e) =>
                 {
-                    try
-                    {
-                        Convert.ToByte(DeviceMac1.Text, 16);
-                        Convert.ToByte(DeviceMac2.Text, 16);
-                        Convert.ToByte(DeviceMac3.Text, 16);
-                        Convert.ToByte(DeviceMac4.Text, 16);
-                        Convert.ToByte(DeviceMac5.Text, 16);
-                        Convert.ToByte(DeviceMac6.Text, 16);
-
-                        Convert.ToByte(DeviceIp1.Text);
-                        Convert.ToByte(DeviceIp2.Text);
-                        Convert.ToByte(DeviceIp3.Text);
-                        Convert.ToByte(DeviceIp4.Text);
-
-                        Convert.ToByte(DeviceBroadcast1.Text);
-                        Convert.ToByte(DeviceBroadcast2.Text);
-                        Convert.ToByte(DeviceBroadcast3.Text);
-                        Convert.ToByte(DeviceBroadcast4.Text);
-
-                        Convert.ToByte(DevicePort.Text);
-                        Convert.ToByte(SendingCount.Text);
-                    }
-                    catch
+                    if (!TestDataFormat())
                     {
                         Toast.MakeText(this, GetString(Resource.String.add_device_error), ToastLength.Long).Show();
 
@@ -438,6 +397,66 @@ namespace WOL.Droid
                 .Create();
             AlertDialog show = alertDialog.Show();
         }
-	}
+
+        private void Edit(AdapterView.ItemClickEventArgs e)
+        {
+            DeviceInfo device = data[e.Position];
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            View view = View.Inflate(this, Resource.Layout.Add, null);
+
+            InitViewControls(view);
+            InitViewControlsContents(device);
+
+            alertDialog.SetView(view)
+                .SetPositiveButton(GetString(Resource.String.add_device_save), (_s, _e) =>
+                {
+                    if (!TestDataFormat())
+                    {
+                        Toast.MakeText(this, GetString(Resource.String.add_device_error), ToastLength.Long).Show();
+
+                        return;
+                    }
+
+                    device.Name = DeviceName.Text;
+                    device.MacAddress = $"{DeviceMac1.Text}-{DeviceMac2.Text}-{DeviceMac3.Text}-{DeviceMac4.Text}-{DeviceMac5.Text}-{DeviceMac6.Text}";
+                    device.IpAddress = $"{DeviceIp1.Text}.{DeviceIp2.Text}.{DeviceIp3.Text}.{DeviceIp4.Text}";
+                    device.BroadcastAddress = $"{DeviceBroadcast1.Text}.{DeviceBroadcast2.Text}.{DeviceBroadcast3.Text}.{DeviceBroadcast4.Text}";
+                    device.Port = Convert.ToByte(DevicePort.Text);
+                    device.SendingCount = Convert.ToByte(SendingCount.Text);
+                    device.Description = DeviceDesc.Text;
+
+                    sqlite.Update(device);
+
+                    data = sqlite.QueryAll();
+                    adapter = new DeviceListAdapter(this, Resource.Layout.device_list_item, data);
+                    DeviceList.Adapter = adapter;
+
+                    Toast.MakeText(this, GetString(Resource.String.add_device_save_success), ToastLength.Long).Show();
+                })
+                .SetNegativeButton(GetString(Resource.String.add_device_cancel), (_s, _e) =>
+                {
+                    (_s as AlertDialog).Dismiss();
+                })
+                .SetNeutralButton(Resource.String.add_device_delete, (_s, _e) =>
+                {
+                    sqlite.Delete(device);
+
+                    data = sqlite.QueryAll();
+                    adapter = new DeviceListAdapter(this, Resource.Layout.device_list_item, data);
+                    DeviceList.Adapter = adapter;
+
+                    if (data.Count != 0)
+                    {
+                        DeviceList.Visibility = ViewStates.Visible;
+                        Tips.Visibility = ViewStates.Gone;
+                    }
+
+                    Toast.MakeText(this, GetString(Resource.String.add_device_delete_success), ToastLength.Long).Show();
+                })
+                .Create();
+            AlertDialog show = alertDialog.Show();
+        }
+    }
 }
 

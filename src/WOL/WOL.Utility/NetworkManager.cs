@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
+using Xamarin.Forms;
 
 namespace WOL.Utility
 {
@@ -119,33 +120,39 @@ namespace WOL.Utility
 
             try
             {
-                ProcessStartInfo psi = new ProcessStartInfo()
+                if (Device.RuntimePlatform == Device.Android)
                 {
-                    FileName = "cat",
-                    CreateNoWindow = false,
-                    RedirectStandardInput = false,
-                    RedirectStandardOutput = true,
-                    Arguments = "/proc/net/arp",
-                    UseShellExecute = false
-                };
-
-                Process process = Process.Start(psi);
-                
-                while (!process.StandardOutput.EndOfStream)
-                {
-                    string arp = process.StandardOutput.ReadLine();
-                    
-                    if (arp.Contains("0x2"))
+                    ProcessStartInfo psi = new ProcessStartInfo()
                     {
-                        arp = Regex.Replace(arp, @"\s+", " ");
-                        string[] raw = arp.Split(' ');
-                        string[] info = new string[] { raw[0], raw[3].Replace(':', '-').ToUpper() };
-                        arps.Add(info);
+                        FileName = "cat",
+                        CreateNoWindow = false,
+                        RedirectStandardInput = false,
+                        RedirectStandardOutput = true,
+                        Arguments = "/proc/net/arp",
+                        UseShellExecute = false
+                    };
+
+                    Process process = Process.Start(psi);
+
+                    while (!process.StandardOutput.EndOfStream)
+                    {
+                        string arp = process.StandardOutput.ReadLine();
+
+                        if (arp.Contains("0x2"))
+                        {
+                            arp = Regex.Replace(arp, @"\s+", " ");
+                            string[] raw = arp.Split(' ');
+                            string[] info = new string[] { raw[0], raw[3].Replace(':', '-').ToUpper() };
+                            arps.Add(info);
+                        }
                     }
+
+                    process.WaitForExit();
                 }
+                else if (Device.RuntimePlatform == Device.UWP)
+                {
 
-                process.WaitForExit();
-
+                }
             }
             catch (Exception)
             {

@@ -23,11 +23,26 @@ namespace WOL.Droid.Activities
             SetContentView(Resource.Layout.About);
 
             TextView version = FindViewById<TextView>(Resource.Id.version);
+            TextView email = FindViewById<TextView>(Resource.Id.email);
             ImageView weibo = FindViewById<ImageView>(Resource.Id.weibo);
             ImageView github = FindViewById<ImageView>(Resource.Id.github);
 
             PackageInfo info = PackageManager.GetPackageInfo(PackageName, PackageInfoFlags.Activities);
             version.Text = info.VersionName;
+
+            email.Click += (_s, _e) =>
+            {
+                try
+                {
+                    Intent intent = new Intent(Intent.ActionSend, Android.Net.Uri.Parse("mailto:zhangyuexin121@live.cn"));
+                    StartActivity(intent);
+                    //StartActivity(Intent.CreateChooser(intent, "E-Mail App"));
+                }
+                catch (Exception)
+                {
+
+                }
+            };
 
             weibo.Click += (_s, _e) =>
             {

@@ -67,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+				android:id="@+id/email"
                 android:text="zhangyuexin@live.cn"
                 android:textColor="#72ACE3"
                 android:autoLink="email"
