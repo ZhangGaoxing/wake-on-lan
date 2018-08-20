@@ -157,16 +157,23 @@ namespace WOL.Droid
             var token = scanCTS.Token;
             Task t1 = Task.Run(() =>
             {
-                NetworkManager.GetNetworkIpAndMask(out IPAddress ip, out IPAddress sub);
-                var networkAddress = NetworkManager.CalNetworkAddress(ip, sub).ToString();
-                networkAddress = networkAddress.Substring(0, networkAddress.Length - 1);
-
-                for (int i = 2; i <= 254; i = i + 1)
+                try
                 {
-                    string addr = $"{networkAddress}{i}";
-                    UdpClient udp = new UdpClient(addr, 23452);
-                    udp.Send(new byte[] { 0 }, 1);
-                    ScaningDetail.Text = addr;
+                    NetworkManager.GetNetworkIpAndMask(out IPAddress ip, out IPAddress sub);
+                    var networkAddress = NetworkManager.CalNetworkAddress(ip, sub).ToString();
+                    networkAddress = networkAddress.Substring(0, networkAddress.Length - 1);
+
+                    for (int i = 2; i <= 254; i = i + 1)
+                    {
+                        string addr = $"{networkAddress}{i}";
+                        UdpClient udp = new UdpClient(addr, 23452);
+                        udp.Send(new byte[] { 0 }, 1);
+                        ScaningDetail.Text = addr;
+                    }
+                }
+                catch (Exception)
+                {
+                    
                 }
             }, token);
 
