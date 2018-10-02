@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WOL.UWP.Style">
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <AcrylicBrush x:Key="MyAcrylicBrush"
+                TintColor="{ThemeResource SystemChromeMediumLowColor}"
+                TintOpacity="0.6"
+                FallbackColor="{ThemeResource SystemChromeMediumLowColor}"
+                BackgroundSource="HostBackdrop" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>

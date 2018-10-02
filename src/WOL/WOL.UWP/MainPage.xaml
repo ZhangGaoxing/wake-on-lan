@@ -6,9 +6,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource MyAcrylicBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
+        <Grid>
+            <TextBlock Text="WOL" VerticalAlignment="Center" Margin="14,0,0,0" FontSize="14" />
+        </Grid>
     </Grid>
 </Page>
